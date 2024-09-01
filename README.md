@@ -8,7 +8,7 @@
 <a href="https://godoc.org/github.com/tidwall/gjson"><img src="https://img.shields.io/badge/api-reference-blue.svg?style=flat-square" alt="GoDoc"></a>
 <a href="https://tidwall.com/gjson-play"><img src="https://img.shields.io/badge/%F0%9F%8F%90-playground-9900cc.svg?style=flat-square" alt="GJSON Playground"></a>
 <a href="SYNTAX.md"><img src="https://img.shields.io/badge/{}-syntax-33aa33.svg?style=flat-square" alt="GJSON Syntax"></a>
-	
+
 </p>
 
 <p align="center">get json values quickly</a></p>
@@ -30,13 +30,14 @@ Getting Started
 To start using GJSON, install Go and run `go get`:
 
 ```sh
-$ go get -u github.com/tidwall/gjson
+go get -u github.com/tidwall/gjson
 ```
 
 This will retrieve the library.
 
 ## Get a value
-Get searches json for the specified path. A path is in dot syntax, such as "name.last" or "age". When the value is found it's returned immediately. 
+
+Get searches json for the specified path. A path is in dot syntax, such as "name.last" or "age". When the value is found it's returned immediately.
 
 ```go
 package main
@@ -46,8 +47,8 @@ import "github.com/tidwall/gjson"
 const json = `{"name":{"first":"Janet","last":"Prichard"},"age":47}`
 
 func main() {
-	value := gjson.Get(json, "name.last")
-	println(value.String())
+ value := gjson.Get(json, "name.last")
+ println(value.String())
 }
 ```
 
@@ -56,6 +57,7 @@ This will print:
 ```
 Prichard
 ```
+
 *There's also the [GetMany](#get-multiple-values-at-once) function to get multiple values at once, and [GetBytes](#working-with-bytes) for working with JSON byte slices.*
 
 ## Path Syntax
@@ -82,6 +84,7 @@ The dot and wildcard characters can be escaped with '\\'.
   ]
 }
 ```
+
 ```
 "name.last"          >> "Anderson"
 "age"                >> 37
@@ -95,9 +98,9 @@ The dot and wildcard characters can be escaped with '\\'.
 "friends.1.last"     >> "Craig"
 ```
 
-You can also query an array for the first match by using `#(...)`, or find all 
-matches with `#(...)#`. Queries support the `==`, `!=`, `<`, `<=`, `>`, `>=` 
-comparison operators and the simple pattern matching `%` (like) and `!%` 
+You can also query an array for the first match by using `#(...)`, or find all
+matches with `#(...)#`. Queries support the `==`, `!=`, `<`, `<=`, `>`, `>=`
+comparison operators and the simple pattern matching `%` (like) and `!%`
 (not like) operators.
 
 ```
@@ -111,13 +114,13 @@ friends.#(nets.#(=="fb"))#.first   >> ["Dale","Roger"]
 
 *Please note that prior to v1.3.0, queries used the `#[...]` brackets. This was
 changed in v1.3.0 as to avoid confusion with the new
-[multipath](SYNTAX.md#multipaths) syntax. For backwards compatibility, 
+[multipath](SYNTAX.md#multipaths) syntax. For backwards compatibility,
 `#[...]` will continue to work until the next major release.*
 
 ## Result Type
 
-GJSON supports the json types `string`, `number`, `bool`, and `null`. 
-Arrays and Objects are returned as their raw json types. 
+GJSON supports the json types `string`, `number`, `bool`, and `null`.
+Arrays and Objects are returned as their raw json types.
 
 The `Result` type holds one of these:
 
@@ -181,14 +184,14 @@ result.Int() int64    // -9223372036854775808 to 9223372036854775807
 result.Uint() uint64   // 0 to 18446744073709551615
 ```
 
-## Modifiers and path chaining 
+## Modifiers and path chaining
 
 New in version 1.2 is support for modifier functions and path chaining.
 
-A modifier is a path component that performs custom processing on the 
+A modifier is a path component that performs custom processing on the
 json.
 
-Multiple paths can be "chained" together using the pipe character. 
+Multiple paths can be "chained" together using the pipe character.
 This is useful for getting results from a modified query.
 
 For example, using the built-in `@reverse` modifier on the above json document,
@@ -217,10 +220,10 @@ There are currently the following built-in modifiers:
 
 ### Modifier arguments
 
-A modifier may accept an optional argument. The argument can be a valid JSON 
+A modifier may accept an optional argument. The argument can be a valid JSON
 document or just characters.
 
-For example, the `@pretty` modifier takes a json object as its argument. 
+For example, the `@pretty` modifier takes a json object as its argument.
 
 ```
 @pretty:{"sortKeys":true} 
@@ -242,7 +245,7 @@ Which makes the json pretty and orders all of its keys.
 }
 ```
 
-*The full list of `@pretty` options are `sortKeys`, `indent`, `prefix`, and `width`. 
+*The full list of `@pretty` options are `sortKeys`, `indent`, `prefix`, and `width`.
 Please see [Pretty Options](https://github.com/tidwall/pretty#customized-output) for more information.*
 
 ### Custom modifiers
@@ -271,7 +274,7 @@ gjson.AddModifier("case", func(json, arg string) string {
 
 ## JSON Lines
 
-There's support for [JSON Lines](http://jsonlines.org/) using the `..` prefix, which treats a multilined document as an array. 
+There's support for [JSON Lines](http://jsonlines.org/) using the `..` prefix, which treats a multilined document as an array.
 
 For example:
 
@@ -325,7 +328,7 @@ You would use the path "programmers.#.lastName" like such:
 ```go
 result := gjson.Get(json, "programmers.#.lastName")
 for _, name := range result.Array() {
-	println(name.String())
+ println(name.String())
 }
 ```
 
@@ -338,7 +341,7 @@ println(name.String())  // prints "Elliotte"
 
 ## Iterate through an object or array
 
-The `ForEach` function allows for quickly iterating through an object or array. 
+The `ForEach` function allows for quickly iterating through an object or array.
 The key and value are passed to the iterator function for objects.
 Only the value is passed for arrays.
 Returning `false` from an iterator will stop iteration.
@@ -346,8 +349,8 @@ Returning `false` from an iterator will stop iteration.
 ```go
 result := gjson.Get(json, "programmers")
 result.ForEach(func(key, value gjson.Result) bool {
-	println(value.String()) 
-	return true // keep iterating
+ println(value.String()) 
+ return true // keep iterating
 })
 ```
 
@@ -365,19 +368,19 @@ gjson.Get(json, "name.last")
 
 ## Check for the existence of a value
 
-Sometimes you just want to know if a value exists. 
+Sometimes you just want to know if a value exists.
 
 ```go
 value := gjson.Get(json, "name.last")
 if !value.Exists() {
-	println("no last name")
+ println("no last name")
 } else {
-	println(value.String())
+ println(value.String())
 }
 
 // Or as one step
 if gjson.Get(json, "name.last").Exists() {
-	println("has a last name")
+ println("has a last name")
 }
 ```
 
@@ -389,7 +392,7 @@ If you are consuming JSON from an unpredictable source then you may want to vali
 
 ```go
 if !gjson.Valid(json) {
-	return errors.New("invalid json")
+ return errors.New("invalid json")
 }
 value := gjson.Get(json, "name.last")
 ```
@@ -401,7 +404,7 @@ To unmarshal to a `map[string]interface{}`:
 ```go
 m, ok := gjson.Parse(json).Value().(map[string]interface{})
 if !ok {
-	// not a map
+ // not a map
 }
 ```
 
@@ -431,22 +434,22 @@ This is a best-effort no allocation sub slice of the original json. This method 
 
 ## Performance
 
-Benchmarks of GJSON alongside [encoding/json](https://golang.org/pkg/encoding/json/), 
-[ffjson](https://github.com/pquerna/ffjson), 
+Benchmarks of GJSON alongside [encoding/json](https://golang.org/pkg/encoding/json/),
+[ffjson](https://github.com/pquerna/ffjson),
 [EasyJSON](https://github.com/mailru/easyjson),
 [jsonparser](https://github.com/buger/jsonparser),
 and [json-iterator](https://github.com/json-iterator/go)
 
 ```
-BenchmarkGJSONGet-16                11644512       311 ns/op       0 B/op	       0 allocs/op
-BenchmarkGJSONUnmarshalMap-16        1122678      3094 ns/op    1920 B/op	      26 allocs/op
-BenchmarkJSONUnmarshalMap-16          516681      6810 ns/op    2944 B/op	      69 allocs/op
-BenchmarkJSONUnmarshalStruct-16       697053      5400 ns/op     928 B/op	      13 allocs/op
-BenchmarkJSONDecoder-16               330450     10217 ns/op    3845 B/op	     160 allocs/op
-BenchmarkFFJSONLexer-16              1424979      2585 ns/op     880 B/op	       8 allocs/op
-BenchmarkEasyJSONLexer-16            3000000       729 ns/op     501 B/op	       5 allocs/op
-BenchmarkJSONParserGet-16            3000000       366 ns/op      21 B/op	       0 allocs/op
-BenchmarkJSONIterator-16             3000000       869 ns/op     693 B/op	      14 allocs/op
+BenchmarkGJSONGet-16                11644512       311 ns/op       0 B/op        0 allocs/op
+BenchmarkGJSONUnmarshalMap-16        1122678      3094 ns/op    1920 B/op       26 allocs/op
+BenchmarkJSONUnmarshalMap-16          516681      6810 ns/op    2944 B/op       69 allocs/op
+BenchmarkJSONUnmarshalStruct-16       697053      5400 ns/op     928 B/op       13 allocs/op
+BenchmarkJSONDecoder-16               330450     10217 ns/op    3845 B/op      160 allocs/op
+BenchmarkFFJSONLexer-16              1424979      2585 ns/op     880 B/op        8 allocs/op
+BenchmarkEasyJSONLexer-16            3000000       729 ns/op     501 B/op        5 allocs/op
+BenchmarkJSONParserGet-16            3000000       366 ns/op      21 B/op        0 allocs/op
+BenchmarkJSONIterator-16             3000000       869 ns/op     693 B/op       14 allocs/op
 ```
 
 JSON document used:
@@ -488,3 +491,42 @@ widget.text.onMouseUp
 ```
 
 *These benchmarks were run on a MacBook Pro 16" 2.4 GHz Intel Core i9 using Go 1.17 and can be found [here](https://github.com/tidwall/gjson-benchmarks).*
+
+## Options
+
+### FastPath
+
+This option is used to cache parsed simple paths and search JSON path all-in-once in C funtions, to reduce the overhead of c-go interaction. By default, this option is disabled, because it will and comsumes a little more memory than default. You can disable it by set env `GJSON_FAST_PATH=1`
+
+### FastString
+
+By default, Gjson doesn't validate UTF8 when unescaping a string, thus string-value APIs' behavior are different from `encoding/json`. You change the behavior of it by below options:
+
+- `GJSON_FAST_STRING=1`, string-value APIs' behavior will be same with [sonic/decoder](https://github.com/bytedance/sonic)'s default behavior, with 2~3X times of speed of original string-parsing.
+- `GJSON_FAST_STRING=2`, string-value APIs' will validate UTF8, which is totally same with `encoding/json.Decode`, but the speed will be slower than default.
+
+### Benchmark
+
+This is benchmark on above options (see [codes](testdata/gjson_timing_test.go)):
+
+```
+goos: linux
+goarch: amd64
+pkg: github.com/tidwall/gjson/testdata
+cpu: Intel(R) Xeon(R) Platinum 8260 CPU @ 2.40GHz
+BenchmarkFastPath/normal/small-32                  741.1 ns/op        0 B/op        0 allocs/op
+BenchmarkFastPath/normal/medium-32                  1846 ns/op        0 B/op        0 allocs/op
+BenchmarkFastPath/normal/Large-32                  38675 ns/op        0 B/op        0 allocs/op
+BenchmarkFastPath/fast-path/small-32               364.4 ns/op        0 B/op        0 allocs/op
+BenchmarkFastPath/fast-path/medium-32               1662 ns/op        0 B/op        0 allocs/op
+BenchmarkFastPath/fast-path/Large-32               38976 ns/op        0 B/op        0 allocs/op
+BenchmarkParseString/normal/small-32               441.1 ns/op      192 B/op        2 allocs/op
+BenchmarkParseString/normal/medium-32               4945 ns/op     2560 B/op        2 allocs/op
+BenchmarkParseString/normal/large-32               63780 ns/op    27905 B/op        2 allocs/op
+BenchmarkParseString/fast-string/small-32          208.4 ns/op       96 B/op        1 allocs/op
+BenchmarkParseString/fast-string/medium-32          2071 ns/op     1408 B/op        1 allocs/op
+BenchmarkParseString/fast-string/large-32          16778 ns/op    14336 B/op        1 allocs/op
+BenchmarkParseString/validate-string/small-32      220.2 ns/op       96 B/op        1 allocs/op
+BenchmarkParseString/validate-string/medium-32      1961 ns/op     1408 B/op        1 allocs/op
+BenchmarkParseString/validate-string/large-32      15671 ns/op    14336 B/op        1 allocs/op
+```
