@@ -107,12 +107,14 @@ func BenchmarkParseString(b *testing.B) {
 		fast.ValidStringEnable = false
 		b.Run("small", func(b *testing.B) {
 			var str = `"<a href=\"//twitter.com/download/iphone%5C%22\" rel=\"\\\"nofollow\\\"\">Twitter for iPhone</a>"`
+			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
 				_ = Parse(str)
 			}
 		})
 		b.Run("medium", func(b *testing.B) {
 			var str = strconv.Quote(complicatedJSON)
+			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
 				_ = Parse(str)
 
@@ -120,6 +122,7 @@ func BenchmarkParseString(b *testing.B) {
 		})
 		b.Run("large", func(b *testing.B) {
 			var str = strconv.Quote(TwitterJsonMedium)
+			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
 				_ = Parse(str)
 			}
@@ -129,12 +132,14 @@ func BenchmarkParseString(b *testing.B) {
 		fast.FastStringEnable = true
 		b.Run("small", func(b *testing.B) {
 			var str = `"<a href=\"//twitter.com/download/iphone%5C%22\" rel=\"\\\"nofollow\\\"\">Twitter for iPhone</a>"`
+			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
 				_ = Parse(str)
 			}
 		})
 		b.Run("medium", func(b *testing.B) {
 			var str = strconv.Quote(complicatedJSON)
+			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
 				_ = Parse(str)
 
@@ -142,6 +147,7 @@ func BenchmarkParseString(b *testing.B) {
 		})
 		b.Run("large", func(b *testing.B) {
 			var str = strconv.Quote(TwitterJsonMedium)
+			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
 				_ = Parse(str)
 			}
@@ -152,12 +158,14 @@ func BenchmarkParseString(b *testing.B) {
 		fast.ValidStringEnable = true
 		b.Run("small", func(b *testing.B) {
 			var str = `"<a href=\"//twitter.com/download/iphone%5C%22\" rel=\"\\\"nofollow\\\"\">Twitter for iPhone</a>"`
+			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
 				_ = Parse(str)
 			}
 		})
 		b.Run("medium", func(b *testing.B) {
 			var str = strconv.Quote(complicatedJSON)
+			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
 				_ = Parse(str)
 
@@ -165,6 +173,7 @@ func BenchmarkParseString(b *testing.B) {
 		})
 		b.Run("large", func(b *testing.B) {
 			var str = strconv.Quote(TwitterJsonMedium)
+			b.ResetTimer()
 			for i := 0; i < b.N; i++ {
 				_ = Parse(str)
 			}
