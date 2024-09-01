@@ -496,20 +496,21 @@ widget.text.onMouseUp
 
 ### FastPath
 
-This option is used to cache parsed simple paths and search JSON path all-in-once in C funtions, to reduce the overhead of c-go interaction. By default, this option is disabled, because it will and comsumes a little more memory than default. You can disable it by set environment variable `GJSON_FAST_PATH=1`
+This option is used to cache parsed simple paths and search JSON path all-in-once in C funtions, to reduce the overhead of c-go interaction. By default, this option is disabled, because it will and consumes a little more memory than default. You can enable it by set environment variable `GJSON_FAST_PATH=1`.
 
 ### FastString
 
-By default, Gjson doesn't validate UTF8 and doesn't use SIMD algorithm when unescaping a string, thus its string-value APIs' behavior are slow and different from `encoding/json`. You change the behaviors by setting below environment variable:
+By default, Gjson doesn't use the SIMD algorithm when decoding a string and does not validate UTF8 either, thus its string-value APIs' behaviors are slow and different from `encoding/json`. You can change the behaviors by setting the environment variable below:
 
-- `GJSON_FAST_STRING=1`: `SIMD-implemented` string parsing. The string-value APIs' behaviors will be same with [sonic/decoder](https://github.com/bytedance/sonic)'s default behavior, with 2~3X times of speed of default string-parsing.
-- `GJSON_FAST_STRING=2`, `SIMD-implemented` string parsing and utf8 validating. String-value APIs' behaviors will be totally same with `encoding/json.Decode` and also faster than default.
+- `GJSON_FAST_STRING=1`: `SIMD-implemented` string parsing. The string-value APIs' behaviors will be the same as [sonic/decoder](https://github.com/bytedance/sonic)'s default behavior, with 2~3X times the speed of default string-parsing.
+- `GJSON_FAST_STRING=2`, `SIMD-implemented` string parsing, and UTF-8 validating. String-value APIs' behaviors will be totally same with `encoding/json.Decode` and also faster than the default.
 
 ### Benchmark
 
-This is benchmark on above options (see [codes](testdata/gjson_timing_test.go)):
+This is a benchmark on the above options (see [codes](testdata/gjson_timing_test.go)):
 
 ```
+goversion: 1.22.0
 goos: linux
 goarch: amd64
 pkg: github.com/tidwall/gjson/testdata
@@ -520,7 +521,7 @@ BenchmarkFastPath/normal/Large-32                  38675 ns/op        0 B/op    
 BenchmarkFastPath/fast-path/small-32               364.4 ns/op        0 B/op        0 allocs/op
 BenchmarkFastPath/fast-path/medium-32               1662 ns/op        0 B/op        0 allocs/op
 BenchmarkFastPath/fast-path/Large-32               38976 ns/op        0 B/op        0 allocs/op
-BenchmarkParseString/normal/small-32                401.8 ns/op      192 B/op        2 allocs/op
+BenchmarkParseString/normal/small-32               401.8 ns/op      192 B/op        2 allocs/op
 BenchmarkParseString/normal/medium-32               4600 ns/op     2560 B/op        2 allocs/op
 BenchmarkParseString/normal/large-32               63202 ns/op    27904 B/op        2 allocs/op
 BenchmarkParseString/fast-string/small-32          219.7 ns/op       96 B/op        1 allocs/op
