@@ -1,5 +1,5 @@
 /**
- * Copyright 2024 ByteDance Inc.
+ * Copyright 2024 Cloudwego Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import (
 	"os"
 	"strconv"
 
-	"github.com/tidwall/gjson/internal/caching"
+	"github.com/cloudwego/gjson/internal/caching"
 )
 
 var psCache caching.IncRCU

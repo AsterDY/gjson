@@ -1,5 +1,5 @@
 /**
- * Copyright 2024 ByteDance Inc.
+ * Copyright 2024 Cloudwego Authors
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,8 +20,8 @@ import (
 	"strconv"
 	"testing"
 
-	. "github.com/tidwall/gjson"
-	"github.com/tidwall/gjson/internal/fast"
+	. "github.com/cloudwego/gjson"
+	"github.com/cloudwego/gjson/internal/fast"
 )
 
 func BenchmarkGetComplexPath(b *testing.B) {

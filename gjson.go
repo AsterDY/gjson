@@ -9,7 +9,7 @@ import (
 	"unicode/utf8"
 	"unsafe"
 
-	"github.com/tidwall/gjson/internal/fast"
+	"github.com/cloudwego/gjson/internal/fast"
 	"github.com/tidwall/match"
 	"github.com/tidwall/pretty"
 )
